@@ -1,13 +1,9 @@
 import styled from "styled-components";
 import Link from "next/link";
 
+import {BsFillCaretLeftFill, BsFillCaretRightFill} from "react-icons/bs";
+
 const NavWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
 `;
 
 const NavItem = styled.div`
@@ -15,7 +11,7 @@ const NavItem = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  color: #fff;
+  color: #000;
   font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
@@ -23,20 +19,40 @@ const NavItem = styled.div`
 
   z-index: 1;
   transform: translateY(-50%);
+
+  & span {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  & svg {
+    transition: transform 0.3s ease-in-out;
+  }
+
   &:hover {
     background-color: #fff;
     color: #000;
+    & span{
+      opacity: 1;
+    }
   }
 `;
 
 const LeftNavItem = styled(NavItem)`
   position: absolute;
   left: 0;
+  &:hover svg {
+    transform: translateX(-20%);
+  }
 `;
 
 const RightNavItem = styled(NavItem)`
   position: absolute;
   right: 0;
+
+  &:hover svg {
+    transform: translateX(20%);
+  }
 `;
 
 const routes = ["About", "Home", "Configurator"];
@@ -51,14 +67,20 @@ export default function Nav({ currentPage }) {
       {left && (
         <LeftNavItem>
           <Link href={linkLeft}>
-            <a>{left}</a>
+            <a>
+              <BsFillCaretLeftFill />
+              <span>{left}</span>
+            </a>
           </Link>
         </LeftNavItem>
       )}
       {right && (
         <RightNavItem>
           <Link href={linkRight}>
-            <a>{right}</a>
+            <a>
+              <span>{right}</span>
+              <BsFillCaretRightFill />
+            </a>
           </Link>
         </RightNavItem>
       )}
