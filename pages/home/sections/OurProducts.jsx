@@ -1,3 +1,7 @@
+import styled from "styled-components";
+
+const OurProductsSection = styled.section``
+
 export default function OurProducts() {
-  return <div className="our-products"></div>;
+  return <OurProductsSection></OurProductsSection>
 }

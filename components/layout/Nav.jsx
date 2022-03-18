@@ -7,6 +7,7 @@ const NavWrapper = styled.div`
 `;
 
 const NavItem = styled.div`
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,26 +21,40 @@ const NavItem = styled.div`
   z-index: 1;
   transform: translateY(-50%);
 
+  border-radius: 0.4rem;
+  height: 3rem;
+  line-height: 3rem;
+  vertical-align: middle;
+
+
+  & > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   & span {
+    display: block;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
   }
 
   & svg {
+    display: block;
     transition: transform 0.3s ease-in-out;
   }
 
   &:hover {
-    background-color: #fff;
     color: #000;
-    & span{
+    background-color: rgba(255 255 255 / 0.75);
+    backdrop-filter: blur(5px);
+    & span {
       opacity: 1;
     }
   }
 `;
 
 const LeftNavItem = styled(NavItem)`
-  position: absolute;
   left: 0;
   &:hover svg {
     transform: translateX(-20%);
@@ -47,7 +62,6 @@ const LeftNavItem = styled(NavItem)`
 `;
 
 const RightNavItem = styled(NavItem)`
-  position: absolute;
   right: 0;
 
   &:hover svg {
