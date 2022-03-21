@@ -80,23 +80,21 @@ export default function Nav({ currentPage }) {
 
   const router = useRouter();
 
-  const handleFocusedClick = (e, route) => {
-    e.target.addEventListener("keydown", (e) => {
-      if (e.keyCode === 13) {
-        router.push(route);
-        e.target.blur();
-      }
-    });
+  const handleFocusedClick = (e, link) => {
+    if (e.key === "Enter") {
+      router.push(link);
+    }
   };
+
   return (
     <NavWrapper>
       {left && (
         <LeftNavItem
-          tabIndex={1}
-          onFocus={(e) => handleFocusedClick(e, linkLeft)}
+          tabIndex={2}
+          onKeyDown={(e) => handleFocusedClick(e, linkLeft)}
         >
           <Link href={linkLeft}>
-            <a tabIndex={1}>
+            <a>
               <BsFillCaretLeftFill />
               <span>{left}</span>
             </a>
@@ -105,8 +103,8 @@ export default function Nav({ currentPage }) {
       )}
       {right && (
         <RightNavItem
-          tabIndex={2}
-          onFocus={(e) => handleFocusedClick(e, linkRight)}
+          tabIndex={3}
+          onKeyDown={(e) => handleFocusedClick(e, linkRight)}
         >
           <Link href={linkRight}>
             <a>
