@@ -83,6 +83,7 @@ export default function Nav({ currentPage }) {
   const handleFocusedClick = (e, link) => {
     if (e.key === "Enter") {
       router.push(link);
+      e.target.blur();
     }
   };
 
@@ -90,7 +91,7 @@ export default function Nav({ currentPage }) {
     <NavWrapper>
       {left && (
         <LeftNavItem
-          tabIndex={2}
+          tabIndex={0}
           onKeyDown={(e) => handleFocusedClick(e, linkLeft)}
         >
           <Link href={linkLeft}>
@@ -103,7 +104,7 @@ export default function Nav({ currentPage }) {
       )}
       {right && (
         <RightNavItem
-          tabIndex={3}
+          tabIndex={0}
           onKeyDown={(e) => handleFocusedClick(e, linkRight)}
         >
           <Link href={linkRight}>
