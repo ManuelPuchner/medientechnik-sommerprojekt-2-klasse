@@ -1,10 +1,11 @@
+import { useRouter } from "next/router";
+
 import styled from "styled-components";
 import Link from "next/link";
 
-import {BsFillCaretLeftFill, BsFillCaretRightFill} from "react-icons/bs";
+import { BsFillCaretLeftFill, BsFillCaretRightFill } from "react-icons/bs";
 
-const NavWrapper = styled.div`
-`;
+const NavWrapper = styled.div``;
 
 const NavItem = styled.div`
   position: absolute;
@@ -26,7 +27,6 @@ const NavItem = styled.div`
   line-height: 3rem;
   vertical-align: middle;
 
-
   & > a {
     display: flex;
     justify-content: center;
@@ -44,7 +44,8 @@ const NavItem = styled.div`
     transition: transform 0.3s ease-in-out;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: #000;
     background-color: rgba(255 255 255 / 0.75);
     backdrop-filter: blur(5px);
@@ -76,12 +77,26 @@ export default function Nav({ currentPage }) {
   const right = routes[routes.indexOf(currentPage) + 1]?.toLowerCase();
   const linkLeft = left?.charAt(0) === "/" ? left : `/${left}`;
   const linkRight = right?.charAt(0) === "/" ? right : `/${right}`;
+
+  const router = useRouter();
+
+  const handleFocusedClick = (e, route) => {
+    e.target.addEventListener("keydown", (e) => {
+      if (e.keyCode === 13) {
+        router.push(route);
+        e.target.blur();
+      }
+    });
+  };
   return (
     <NavWrapper>
       {left && (
-        <LeftNavItem>
+        <LeftNavItem
+          tabIndex={1}
+          onFocus={(e) => handleFocusedClick(e, linkLeft)}
+        >
           <Link href={linkLeft}>
-            <a>
+            <a tabIndex={1}>
               <BsFillCaretLeftFill />
               <span>{left}</span>
             </a>
@@ -89,7 +104,10 @@ export default function Nav({ currentPage }) {
         </LeftNavItem>
       )}
       {right && (
-        <RightNavItem>
+        <RightNavItem
+          tabIndex={2}
+          onFocus={(e) => handleFocusedClick(e, linkRight)}
+        >
           <Link href={linkRight}>
             <a>
               <span>{right}</span>
