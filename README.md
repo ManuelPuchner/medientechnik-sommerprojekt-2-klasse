@@ -2,5 +2,5 @@
 ## Manuel Puchner
 ---
 
-GitHub Repe:
+GitHub Repo:
 [https://github.com/ManuelPuchner/medientechnik-sommerprojekt-2-klasse](https://github.com/ManuelPuchner/medientechnik-sommerprojekt-2-klasse)
