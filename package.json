@@ -1,23 +1,39 @@
 {
   "name": "medtwt-projekt-manuel-puchner",
-  "private": true,
+  "version": "1.0.0",
+  "description": "---",
+  "main": "next.config.js",
+  "dependencies": {
+    "@react-three/drei": "^9.1.2",
+    "@react-three/fiber": "^8.0.9",
+    "next": "^12.1.4",
+    "react": "^18.0.0-rc.3",
+    "react-dom": "^18.0.0-rc.3",
+    "react-icons": "^4.3.1",
+    "styled-components": "^5.3.5",
+    "three": "^0.139.2"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
-  "dependencies": {
-    "next": "12.1.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-icons": "^4.3.1",
-    "styled-components": "^5.3.3"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManuelPuchner/medientechnik-sommerprojekt-2-klasse.git"
   },
+  "keywords": [],
+  "author": "Manuel Puchner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ManuelPuchner/medientechnik-sommerprojekt-2-klasse/issues"
+  },
+  "homepage": "https://github.com/ManuelPuchner/medientechnik-sommerprojekt-2-klasse#readme",
   "devDependencies": {
     "@types/styled-components": "^5.1.24",
     "babel-plugin-styled-components": "^2.0.6",
-    "eslint": "7.32.0",
-    "eslint-config-next": "12.1.0"
+    "eslint": "^8.12.0",
+    "eslint-config-next": "^12.1.4"
   }
 }

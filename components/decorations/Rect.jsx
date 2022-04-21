@@ -13,23 +13,19 @@ const ActualRect = styled.div`
 
 function Rect(props) {
   const ref = useRef(0);
+  const handleRotate = (randomSpeed) => {
+    ref.current.style.transform = `translate(-50%, -50%) rotate(${
+      props.rotation + window.scrollY / randomSpeed
+    }deg)`;
+  };
   useEffect(() => {
     const shouldRotate = Math.random() > 0.5;
     const randomSpeed = shouldRotate
       ? (Math.random() - 0.5) * 2 * 150 + 130
       : 0;
-    window.addEventListener("scroll", () => {
-      ref.current.style.transform = `translate(-50%, -50%) rotate(${
-        props.rotation + window.scrollY / randomSpeed
-      }deg)`;
-    });
+    window.addEventListener("scroll", () => handleRotate(randomSpeed));
     () => {
-      window.removeEventListener("scroll", () => {
-        ref.current.style.transform = `translate(-50%, -50%) rotate(${
-          props.rotation + window.scrollY / randomSpeed
-        }deg)`;
-        console.log(ref);
-      });
+      window.removeEventListener("scroll", () => handleRotate(randomSpeed));
     };
   }, [props.rotation]);
   return (
