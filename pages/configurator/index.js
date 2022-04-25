@@ -1,14 +1,22 @@
 import { Canvas } from "@react-three/fiber";
 import {
+  Html,
   Environment,
   ContactShadows,
   OrbitControls,
+  useProgress,
 } from "@react-three/drei";
 
 import { useState, Suspense } from "react";
 
 import ShoeModel from "./ShoeModel";
 import ConfigurationElements from "./ConfigurationElements";
+
+function LoadingScreen() {
+  const prog = useProgress();
+  console.log(prog);
+  return <Html center>{prog.progress} %</Html>;
+}
 
 export default function Configurator() {
   const [colors, setColors] = useState({
@@ -44,7 +52,7 @@ export default function Configurator() {
           castShadow
         />
 
-        <Suspense fallback={null}>
+        <Suspense fallback={<LoadingScreen />}>
           <ShoeModel colors={colors} />
           <Environment preset="city" />
           <ContactShadows />
