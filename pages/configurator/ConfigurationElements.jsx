@@ -19,15 +19,18 @@ export default function ConfigurationElements({ colors, setColors }) {
         <div>
           <InputWrapper>
             <label>Laces</label>
-            <input
+            {/* <input
               type="color"
               name=""
               id=""
               onChange={(e) => setColors({ ...colors, laces: e.target.value })}
-            />
-            {/* <ColorPicker
-              onChange={(e) => setColors({ ...colors, laces: e.target.value })}
             /> */}
+            <ColorPicker
+              // onChange={(e) => setColors({ ...colors, laces: e.target.value })}
+              onChange={(color) => {
+                setColors({ ...colors, laces: color })
+              }}
+            />
           </InputWrapper>
           <InputWrapper>
             <label>Mesh</label>

@@ -3,12 +3,17 @@
     "next/babel"
   ],
   "plugins": [
+    // [
+    //   "babel-plugin-styled-components",
+    //   {
+    //     "fileName": true,
+    //     "displayName": true,
+    //     "pure": true
+    //   }
+    // ]
     [
-      "babel-plugin-styled-components",
-      {
-        "fileName": true,
-        "displayName": true,
-        "pure": true
+      "styled-components", {
+        "ssr": true
       }
     ]
   ]

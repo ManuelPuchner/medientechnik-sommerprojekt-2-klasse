@@ -65,6 +65,7 @@ export default function Configurator() {
         />
       </Canvas>
       <ConfigurationElements colors={colors} setColors={setColors} />
+      <button style={{background: colors.laces}}>temp</button>
     </div>
   );
 }

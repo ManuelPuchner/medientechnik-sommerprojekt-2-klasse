@@ -1,5 +1,9 @@
 import { useState, useRef } from "react";
 import styled from "styled-components";
+import { HSVtoHEX } from "utils/colorConversions";
+import {map} from "utils"
+
+import HueSlider from "./HueSlider";
 
 const ColorField = styled.div`
   position: relative;
@@ -30,6 +34,7 @@ const Pointer = styled.div`
   background-color: ${(props) => props.color};
   cursor: pointer;
 `;
+
 
 export function ColorPicker({ onChange }) {
   const [color, setColor] = useState("#ff0000");
@@ -69,31 +74,46 @@ export function ColorPicker({ onChange }) {
     }
   };
 
-  const map = (val, in_min, in_max, out_min, out_max) =>
-    ((val - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
-
+  
   const getColor = ({ x, y, width, height }) => {
-    console.log({x: x, y: y, width: width, height: height});
-    let s = map(x, 0, width, 0, 100);
-    let l = map(y, 0, height, 100, 0);
+    if (x > width) {
+      x = width;
+    } else if (x < 0) {
+      x = 0;
+    }
 
-    let hsl = `hsl(${hue}, ${s}%, ${l}%)`;
-    return hsl;
+    if (y > height) {
+      y = height;
+    } else if (y < 0) {
+      y = 0;
+    }
+
+    let s = map(x, 0, width, 0, 1);
+    let v = map(y, 0, height, 1, 0);
+    return [s, v];
   };
 
   const handleMouseUp = (e) => {
     isDragging = false;
     let rect = colorFieldRef.current.getBoundingClientRect();
-    let hsl = getColor({
+    let [s, v] = getColor({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
       width: rect.width,
       height: rect.height,
     });
 
-    setColor(hsl);
-    onChange();
+    let hex = HSVtoHEX(hue, s, v);
+    setColor(hex);
+    onChange(hex);
+    // console.log("color change", {hue, s, v},{r, g, b}, hex)
   };
+
+  const handleHueChange = (e, _hue) => {
+    setHue(_hue);
+    
+    console.log("hue change", _hue)
+  }
 
   return (
     <>
@@ -105,11 +125,12 @@ export function ColorPicker({ onChange }) {
         >
           <Pointer
             ref={pointerRef}
-            color={color}
+            color={"#00ff00"}
             onMouseDown={handleDrag}
             onMouseUp={handleMouseUp}
           />
         </ColorField>
+        <HueSlider hue={hue} handleHueChange={handleHueChange}/>
       </div>
     </>
   );
