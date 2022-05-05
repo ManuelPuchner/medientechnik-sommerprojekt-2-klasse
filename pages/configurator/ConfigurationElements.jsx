@@ -28,53 +28,51 @@ export default function ConfigurationElements({ colors, setColors }) {
             <ColorPicker
               // onChange={(e) => setColors({ ...colors, laces: e.target.value })}
               onChange={(color) => {
-                setColors({ ...colors, laces: color })
+                setColors({ ...colors, laces: color });
               }}
             />
           </InputWrapper>
           <InputWrapper>
             <label>Mesh</label>
-            {/* <ColorPicker
-              onChange={(e) => setColors({ ...colors, mesh: e.target.value })}
-            /> */}
+            <ColorPicker
+              onChange={(color) => setColors({ ...colors, mesh: color })}
+            />
           </InputWrapper>
           <InputWrapper>
             <label>Caps</label>
-            {/* <ColorPicker
-              onChange={(e) => setColors({ ...colors, caps: e.target.value })}
-            /> */}
+            <ColorPicker
+              onChange={(color) => setColors({ ...colors, caps: color })}
+            />
           </InputWrapper>
           <InputWrapper>
             <label>Inner</label>
-            {/* <ColorPicker
-              onChange={(e) => setColors({ ...colors, inner: e.target.value })}
-            /> */}
+            <ColorPicker
+              onChange={(color) => setColors({ ...colors, inner: color })}
+            />
           </InputWrapper>
           <InputWrapper>
             <label>Sole</label>
-            {/* <ColorPicker
-              onChange={(e) => setColors({ ...colors, sole: e.target.value })}
-            /> */}
+            <ColorPicker
+              onChange={(color) => setColors({ ...colors, sole: color })}
+            />
           </InputWrapper>
           <InputWrapper>
             <label>Stripes</label>
-            {/* <ColorPicker
-              onChange={(e) =>
-                setColors({ ...colors, stripes: e.target.value })
-              }
-            /> */}
+            <ColorPicker
+              onChange={(color) => setColors({ ...colors, stripes: color })}
+            />
           </InputWrapper>
           <InputWrapper>
             <label>Band</label>
-            {/* <ColorPicker
-              onChange={(e) => setColors({ ...colors, band: e.target.value })}
-            /> */}
+            <ColorPicker
+              onChange={(color) => setColors({ ...colors, band: color })}
+            />
           </InputWrapper>
           <InputWrapper>
             <label>Patch</label>
-            {/* <ColorPicker
-              onChange={(e) => setColors({ ...colors, patch: e.target.value })}
-            /> */}
+            <ColorPicker
+              onChange={(color) => setColors({ ...colors, patch: color })}
+            />
           </InputWrapper>
         </div>
       </ConfigurationWrapper>

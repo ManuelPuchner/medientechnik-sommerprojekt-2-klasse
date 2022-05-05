@@ -6,17 +6,21 @@ import {
   OrbitControls,
   useProgress,
 } from "@react-three/drei";
+import styled from "styled-components"
 
 import { useState, Suspense } from "react";
 
 import ShoeModel from "./ShoeModel";
 import ConfigurationElements from "./ConfigurationElements";
+import Walkthrough from "./Walkthrough";
 
 function LoadingScreen() {
   const prog = useProgress();
   console.log(prog);
   return <Html center>{prog.progress} %</Html>;
 }
+
+
 
 export default function Configurator() {
   const [colors, setColors] = useState({
@@ -32,8 +36,9 @@ export default function Configurator() {
   return (
     <div
       className="wrapper"
-      style={{ position: "relative", width: "100vw", height: "100vh" }}
+      style={{ position: "relative", width: "100vw", height: "100%", overflow: "hidden" }}
     >
+      <Walkthrough />
       <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 0, 4], fov: 60 }}>
         <ambientLight intensity={0.7} />
         <directionalLight
@@ -64,8 +69,7 @@ export default function Configurator() {
           enablePan={false}
         />
       </Canvas>
-      <ConfigurationElements colors={colors} setColors={setColors} />
-      <button style={{background: colors.laces}}>temp</button>
+      {/* {true && <ConfigurationElements colors={colors} setColors={setColors} />} */}
     </div>
   );
 }

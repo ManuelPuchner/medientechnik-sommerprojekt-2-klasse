@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import styled from "styled-components";
-import { HSVtoHEX } from "utils/colorConversions";
-import {map} from "utils"
+import { HEXtoHSV, HSVtoHEX } from "utils/colorConversions";
+import { map } from "utils";
 
 import HueSlider from "./HueSlider";
 
@@ -34,7 +34,6 @@ const Pointer = styled.div`
   background-color: ${(props) => props.color};
   cursor: pointer;
 `;
-
 
 export function ColorPicker({ onChange }) {
   const [color, setColor] = useState("#ff0000");
@@ -74,7 +73,6 @@ export function ColorPicker({ onChange }) {
     }
   };
 
-  
   const getColor = ({ x, y, width, height }) => {
     if (x > width) {
       x = width;
@@ -111,9 +109,12 @@ export function ColorPicker({ onChange }) {
 
   const handleHueChange = (e, _hue) => {
     setHue(_hue);
+    let newHSV = HEXtoHSV(color);
+    let newColor = HSVtoHEX(_hue, newHSV.s/100, newHSV.v/100);
+    onChange(newColor)
+    setColor(newColor)
     
-    console.log("hue change", _hue)
-  }
+  };
 
   return (
     <>
@@ -121,16 +122,16 @@ export function ColorPicker({ onChange }) {
         <ColorField
           ref={colorFieldRef}
           color={`hsl(${hue}, 100%, 50%)`}
-          onMouseMove={handleMouseMove}
+          onPointerMove={handleMouseMove}
         >
           <Pointer
             ref={pointerRef}
             color={"#00ff00"}
-            onMouseDown={handleDrag}
-            onMouseUp={handleMouseUp}
+            onPointerDown={handleDrag}
+            onPointerUp={handleMouseUp}
           />
         </ColorField>
-        <HueSlider hue={hue} handleHueChange={handleHueChange}/>
+        <HueSlider hue={hue} handleHueChange={handleHueChange} />
       </div>
     </>
   );

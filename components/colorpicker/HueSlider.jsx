@@ -76,11 +76,11 @@ function HueSlider({ hue, handleHueChange }) {
   };
 
   return (
-    <HueSliderWrapper ref={hueSliderRef} onMouseMove={handleMouseMove}>
+    <HueSliderWrapper ref={hueSliderRef} onPointerMove={handleMouseMove}>
       <HuePointer
         ref={pointerRef}
-        onMouseDown={handleDrag}
-        onMouseUp={handleMouseUp}
+        onPointerDown={handleDrag}
+        onPointerUp={handleMouseUp}
       />
     </HueSliderWrapper>
   );
