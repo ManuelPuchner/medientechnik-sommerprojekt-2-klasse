@@ -33,12 +33,19 @@ export default function Configurator() {
     band: "#ffffff",
     patch: "#ffffff",
   });
+
+
+
   return (
     <div
       className="wrapper"
-      style={{ position: "relative", width: "100vw", height: "100%", overflow: "hidden" }}
+      style={{
+        position: "relative",
+        width: "100vw",
+        height: "100%",
+      }}
     >
-      <Walkthrough />
+      <Walkthrough colors={colors} setColors={setColors}/>
       <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 0, 4], fov: 60 }}>
         <ambientLight intensity={0.7} />
         <directionalLight
@@ -69,7 +76,7 @@ export default function Configurator() {
           enablePan={false}
         />
       </Canvas>
-      {/* {true && <ConfigurationElements colors={colors} setColors={setColors} />} */}
+      {true && <ConfigurationElements colors={colors} setColors={setColors} />}
     </div>
   );
 }

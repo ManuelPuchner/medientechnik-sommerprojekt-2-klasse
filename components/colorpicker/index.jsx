@@ -7,8 +7,8 @@ import HueSlider from "./HueSlider";
 
 const ColorField = styled.div`
   position: relative;
-  height: 15rem;
-  width: 25rem;
+  width: 100%;
+  height: 100%;
   background-image: linear-gradient(to bottom, transparent 0%, #000 100%),
     linear-gradient(
       to right,
@@ -33,6 +33,11 @@ const Pointer = styled.div`
   border-radius: 50%;
   background-color: ${(props) => props.color};
   cursor: pointer;
+`;
+
+const ColorPickerWrapper = styled.div`
+  height: 15rem;
+  width: 25rem;
 `;
 
 export function ColorPicker({ onChange }) {
@@ -110,29 +115,26 @@ export function ColorPicker({ onChange }) {
   const handleHueChange = (e, _hue) => {
     setHue(_hue);
     let newHSV = HEXtoHSV(color);
-    let newColor = HSVtoHEX(_hue, newHSV.s/100, newHSV.v/100);
-    onChange(newColor)
-    setColor(newColor)
-    
+    let newColor = HSVtoHEX(_hue, newHSV.s / 100, newHSV.v / 100);
+    onChange(newColor);
+    setColor(newColor);
   };
 
   return (
-    <>
-      <div>
-        <ColorField
-          ref={colorFieldRef}
-          color={`hsl(${hue}, 100%, 50%)`}
-          onPointerMove={handleMouseMove}
-        >
-          <Pointer
-            ref={pointerRef}
-            color={"#00ff00"}
-            onPointerDown={handleDrag}
-            onPointerUp={handleMouseUp}
-          />
-        </ColorField>
-        <HueSlider hue={hue} handleHueChange={handleHueChange} />
-      </div>
-    </>
+    <ColorPickerWrapper className="color-picker">
+      <ColorField
+        ref={colorFieldRef}
+        color={`hsl(${hue}, 100%, 50%)`}
+        onPointerMove={handleMouseMove}
+      >
+        <Pointer
+          ref={pointerRef}
+          color={"#00ff00"}
+          onPointerDown={handleDrag}
+          onPointerUp={handleMouseUp}
+        />
+      </ColorField>
+      <HueSlider hue={hue} handleHueChange={handleHueChange} />
+    </ColorPickerWrapper>
   );
 }
