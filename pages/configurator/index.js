@@ -6,7 +6,7 @@ import {
   OrbitControls,
   useProgress,
 } from "@react-three/drei";
-import styled from "styled-components"
+import styled from "styled-components";
 
 import { useState, Suspense } from "react";
 
@@ -20,8 +20,6 @@ function LoadingScreen() {
   return <Html center>{prog.progress} %</Html>;
 }
 
-
-
 export default function Configurator() {
   const [colors, setColors] = useState({
     laces: "#ffffff",
@@ -34,8 +32,6 @@ export default function Configurator() {
     patch: "#ffffff",
   });
 
-
-
   return (
     <div
       className="wrapper"
@@ -43,10 +39,22 @@ export default function Configurator() {
         position: "relative",
         width: "100vw",
         height: "100%",
+        overflowX: "hidden",
       }}
     >
-      <Walkthrough colors={colors} setColors={setColors}/>
-      <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 0, 4], fov: 60 }}>
+      <Walkthrough colors={colors} setColors={setColors} />
+      <Canvas
+        style={{
+          height: "60%",
+          position: "relative",
+          top: "70%",
+          transform: "translateY(-50%)",
+          // userSelect: "none",
+        }}
+        shadows
+        dpr={[1, 2]}
+        camera={{ position: [0, 0, 4], fov: 33 }}
+      >
         <ambientLight intensity={0.7} />
         <directionalLight
           intensity={0.8}
@@ -76,7 +84,7 @@ export default function Configurator() {
           enablePan={false}
         />
       </Canvas>
-      {true && <ConfigurationElements colors={colors} setColors={setColors} />}
+      {/* {true && <ConfigurationElements colors={colors} setColors={setColors} />} */}
     </div>
   );
 }

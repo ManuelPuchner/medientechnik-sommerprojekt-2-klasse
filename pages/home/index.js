@@ -1,4 +1,4 @@
-import Sections from "./sections";
+import Sections from "page_sections/home/sections";
 
 export default function Home() {
   return (

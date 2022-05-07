@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState, useRef } from "react";
 import { ColorPicker } from "components/colorpicker";
+import WalkthroughStep from "./WalkthroughStep";
 
 const WalkthroughScreen = styled.div`
   position: absolute;
@@ -52,23 +53,6 @@ const WalkthroughStartContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-`;
-
-const WalkthoughStep = styled.div`
-  width: 100vw;
-  position: relative;
-  z-index: 1;
-
-  & > .color-picker {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-  }
-  /* & > * {
-    z-index: 2;
-  } */
 `;
 
 const ControlButtonsWrapper = styled.div`
@@ -127,56 +111,35 @@ function Walkthrough({ colors, setColors }) {
     e.preventDefault();
     scrollToNext();
     scrollRef.current.style.zIndex = 0;
+    scrollRef.current.style.backgroundColor = "transparent";
   };
+
+  const customizablePieces = [
+    "laces",
+    "mesh",
+    "caps",
+    "inner",
+    "sole",
+    "stripes",
+    "band",
+    "patch",
+  ]
 
   return (
     <>
       <WalkthroughScreen ref={scrollRef}>
-        <WalkthoughStep>
+        <WalkthroughStep>
           <WalkthroughStartContainer>
             <WalkthroughHeader>Start The Configurator</WalkthroughHeader>
             <WalkthroughStartButton onClick={handleStart}>
               Start <span>&gt;</span>
             </WalkthroughStartButton>
           </WalkthroughStartContainer>
-        </WalkthoughStep>
+        </WalkthroughStep>
 
-        <WalkthoughStep>
-          <h2>Laces</h2>
-          <ColorPicker
-            onChange={(color) => {
-              setColors({ ...colors, laces: color });
-            }}
-          />
-        </WalkthoughStep>
-
-        <WalkthoughStep>
-          <h2>Mesh</h2>
-        </WalkthoughStep>
-
-        <WalkthoughStep>
-          <h2>Caps</h2>
-        </WalkthoughStep>
-
-        <WalkthoughStep>
-          <h2>Inner</h2>
-        </WalkthoughStep>
-
-        <WalkthoughStep>
-          <h2>Sole</h2>
-        </WalkthoughStep>
-
-        <WalkthoughStep>
-          <h2>Stripes</h2>
-        </WalkthoughStep>
-
-        <WalkthoughStep>
-          <h2>Band</h2>
-        </WalkthoughStep>
-
-        <WalkthoughStep>
-          <h2>Patch</h2>
-        </WalkthoughStep>
+        {customizablePieces.map((piece, index) => (
+          <WalkthroughStep key={index} _for={piece} setColors={setColors} colors={colors} />
+        ))}
       </WalkthroughScreen>
 
       {/* <ControlButtonsWrapper>
@@ -197,5 +160,7 @@ function Walkthrough({ colors, setColors }) {
     </>
   );
 }
+
+
 
 export default Walkthrough;

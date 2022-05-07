@@ -52,9 +52,7 @@ export default function ConfigurationElements({ colors, setColors }) {
           </InputWrapper>
           <InputWrapper>
             <label>Sole</label>
-            <ColorPicker
-              onChange={(color) => setColors({ ...colors, sole: color })}
-            />
+            
           </InputWrapper>
           <InputWrapper>
             <label>Stripes</label>
