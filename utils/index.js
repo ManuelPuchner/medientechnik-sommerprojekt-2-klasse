@@ -1,2 +1,3 @@
 import map from "./map";
-export { map };
+import toPascalCase from "./toPascalCase";
+export { map, toPascalCase };

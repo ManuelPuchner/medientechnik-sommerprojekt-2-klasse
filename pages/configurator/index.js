@@ -10,9 +10,9 @@ import styled from "styled-components";
 
 import { useState, Suspense } from "react";
 
-import ShoeModel from "./ShoeModel";
-import ConfigurationElements from "./ConfigurationElements";
-import Walkthrough from "./Walkthrough";
+import ShoeModel from "components/configurator_additions/ShoeModel";
+import ConfigurationElements from "components/configurator_additions/ConfigurationElements";
+import Walkthrough from "components/configurator_additions/Walkthrough";
 
 function LoadingScreen() {
   const prog = useProgress();
@@ -20,7 +20,7 @@ function LoadingScreen() {
   return <Html center>{prog.progress} %</Html>;
 }
 
-export default function Configurator() {
+function Configurator() {
   const [colors, setColors] = useState({
     laces: "#ffffff",
     mesh: "#ffffff",
@@ -88,3 +88,5 @@ export default function Configurator() {
     </div>
   );
 }
+
+export default Configurator

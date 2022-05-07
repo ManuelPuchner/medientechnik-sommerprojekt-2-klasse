@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 
+import { toPascalCase } from "utils";
+
 import styled from "styled-components";
 import Link from "next/link";
 
@@ -73,6 +75,7 @@ const RightNavItem = styled(NavItem)`
 const routes = ["About", "Home", "Configurator"];
 
 export default function Nav({ currentPage }) {
+  currentPage = toPascalCase(currentPage);
   const left = routes[routes.indexOf(currentPage) - 1]?.toLowerCase();
   const right = routes[routes.indexOf(currentPage) + 1]?.toLowerCase();
   const linkLeft = left?.charAt(0) === "/" ? left : `/${left}`;

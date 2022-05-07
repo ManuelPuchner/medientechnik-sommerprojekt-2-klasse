@@ -1,9 +1,12 @@
+import { useRouter } from "next/router";
+
 import Footer from "./Footer";
 import Header from "./Header";
 import Nav from "./Nav";
 
 import styled from "styled-components";
 import Background from "components/decorations/background";
+import { toPascalCase } from "utils";
 
 const MainLayout = styled.div`
   display: grid;
@@ -13,14 +16,16 @@ const MainLayout = styled.div`
 
 const MainContentWrapper = styled.main``;
 
-export default function index({ children, componentName }) {
+export default function Index({ children }) {
+  const router = useRouter();
+  const currentPage = toPascalCase(router.pathname.replace("/", ""));
   return (
     <MainLayout className="layout">
-      <Header componentName={componentName} />
+      <Header componentName={currentPage} />
       <MainContentWrapper>{children}</MainContentWrapper>
       <Footer />
       <Background />
-      <Nav currentPage={componentName} />
+      <Nav currentPage={currentPage} />
     </MainLayout>
   );
 }
