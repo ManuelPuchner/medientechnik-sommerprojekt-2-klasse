@@ -46,13 +46,17 @@ export default function Header({ componentName }) {
       </CompanyName>
       {status === "authenticated" && (
         <ProfileInfo>
-          <ProfileImage src={data.user.image} />
-          <h4>{data.user.name}</h4>
-
-          <Dropdown label="Options">
+          <Dropdown
+            headerConfig={{
+              content: <ProfileImage src={data.user.image} />,
+            }}
+          >
+            <Dropdown.Item>
+              <>{data.user.name}</>
+            </Dropdown.Item>
             <Dropdown.Item>
               <Link href="/account">
-                <a>Profile</a>
+                <a>View Account</a>
               </Link>
             </Dropdown.Item>
             <Dropdown.Item>

@@ -1,19 +1,23 @@
 import styled from "styled-components";
+import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { BsFillArrowUpLeftSquareFill } from "react-icons/bs";
 
 const DropdownWrapper = styled.div`
-  background-color: #fff;
   position: relative;
-  border-radius: 0.2em;
+  
 `;
 
-const DropdownHeader = styled.button`
+const DropdownHeader = styled.div`
   width: 100%;
+  background-color: ${(props) => props.backgroundColor};
   padding: 0.5em 0.6em;
+  border-radius: 0.2em;
+  margin: 0;
   user-select: none;
-  background: transparent;
   border: none;
+  display: block;
+  font-size: 1em;
 
   &:hover {
     cursor: pointer;
@@ -43,31 +47,28 @@ function Item({ children, ...props }) {
   return <ItemWrapper {...props}>{children}</ItemWrapper>;
 }
 
-function Dropdown({ children, label, ...props }) {
+function Dropdown({ children, headerConfig, ...props }) {
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef(null);
-
+  const ref = useRef();
   const handleClick = (e) => {
-    if (!isOpen) {
-      console.log("clicked 1 ");
-      document.addEventListener("click", handlePageClick);
-    } else {
-      console.log("clicked 2");
-      document.removeEventListener("click", handlePageClick);
-    }
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    document.addEventListener("click", handlePageClick);
+    () => document.removeEventListener("click", handlePageClick);
+  }, []);
+
   const handlePageClick = (e) => {
-    if (e.target !== ref.current) {
+    const isOutsideClick = !ref.current.contains(e.target);
+    if (isOutsideClick) {
       setIsOpen(false);
     }
-  }
-
+  };
   return (
     <DropdownWrapper>
-      <DropdownHeader ref={ref} onClick={handleClick}>
-        {label}
+      <DropdownHeader onClick={handleClick} ref={ref} backgroundColor={headerConfig.backgroundColor}>
+        {headerConfig.content}
       </DropdownHeader>
       <Items>{isOpen && children}</Items>
     </DropdownWrapper>
