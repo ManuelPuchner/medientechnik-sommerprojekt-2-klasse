@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 
 import { SignInButton, LogoutButton } from "components/authComponents";
+import Dropdown from "components/dropdown";
 
 const HeaderWrapper = styled.header`
   padding: 2rem 3rem;
@@ -31,6 +32,7 @@ const ProfileInfo = styled.div`
 const ProfileImage = styled.img`
   height: 3rem;
   width: 3rem;
+  border-radius: 50%;
 `;
 
 export default function Header({ componentName }) {
@@ -46,15 +48,25 @@ export default function Header({ componentName }) {
         <ProfileInfo>
           <ProfileImage src={data.user.image} />
           <h4>{data.user.name}</h4>
-          <LogoutButton
-            onClick={() => {
-              signOut({
-                callbackUrl: "http://localhost:3000/",
-              });
-            }}
-          >
-            logout
-          </LogoutButton>
+
+          <Dropdown label="Options">
+            <Dropdown.Item>
+              <Link href="/account">
+                <a>Profile</a>
+              </Link>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <LogoutButton
+                onClick={() => {
+                  signOut({
+                    callbackUrl: "http://localhost:3000/",
+                  });
+                }}
+              >
+                LogOut
+              </LogoutButton>
+            </Dropdown.Item>
+          </Dropdown>
         </ProfileInfo>
       )}
 
