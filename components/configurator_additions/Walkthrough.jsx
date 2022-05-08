@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useRef } from "react";
 import { ColorPicker } from "components/colorpicker";
 import WalkthroughStep from "./WalkthroughStep";
+import { useSession } from "next-auth/react";
 
 const WalkthroughScreen = styled.div`
   position: absolute;
@@ -125,6 +126,23 @@ function Walkthrough({ colors, setColors }) {
     "patch",
   ]
 
+  const {data, status} = useSession();
+
+  const saveConfig =  async (e) => {
+    e.preventDefault();
+    if(status === "authenticated") {
+      const result = await fetch("/api/configuration/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(colors),
+      });
+      const data = await result.json();
+      console.log(data);
+    }
+  }
+
   return (
     <>
       <WalkthroughScreen ref={scrollRef}>
@@ -138,7 +156,12 @@ function Walkthrough({ colors, setColors }) {
         </WalkthroughStep>
 
         {customizablePieces.map((piece, index) => (
-          <WalkthroughStep key={index} _for={piece} setColors={setColors} colors={colors} />
+          <WalkthroughStep
+            key={index}
+            _for={piece}
+            setColors={setColors}
+            colors={colors}
+          />
         ))}
       </WalkthroughScreen>
 
@@ -147,6 +170,7 @@ function Walkthrough({ colors, setColors }) {
       </ControlButtonsWrapper> */}
 
       <PageIndicatorWrapper>
+        <button onClick={saveConfig}>save configuratoin</button>
         <PrevButton onClick={scrollToPrevious}>Prev</PrevButton>
         {[...Array(MAX_PAGE + 1)].map((_, i) => (
           <PageIndicator

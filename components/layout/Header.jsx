@@ -8,6 +8,7 @@ import { SignInButton, LogoutButton } from "components/authComponents";
 import Dropdown from "components/dropdown";
 
 const HeaderWrapper = styled.header`
+  position: relative;
   padding: 2rem 3rem;
   display: flex;
   justify-content: space-between;
@@ -35,6 +36,13 @@ const ProfileImage = styled.img`
   border-radius: 50%;
 `;
 
+const LoginProfileWrapper = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`
+
 export default function Header({ componentName }) {
   const { data, status } = useSession();
   return (
@@ -44,47 +52,50 @@ export default function Header({ componentName }) {
           <a>MyShoes</a>
         </Link>
       </CompanyName>
-      {status === "authenticated" && (
-        <ProfileInfo>
-          <Dropdown
-            headerConfig={{
-              content: <ProfileImage src={data.user.image} />,
+
+      <LoginProfileWrapper>
+        {status === "authenticated" && (
+          <ProfileInfo>
+            <Dropdown
+              headerConfig={{
+                content: <ProfileImage src={data.user.image} />,
+              }}
+            >
+              <Dropdown.Item>
+                <>{data.user.name}</>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Link href="/account">
+                  <a>View Account</a>
+                </Link>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <LogoutButton
+                  onClick={() => {
+                    signOut({
+                      callbackUrl: "http://localhost:3000/",
+                    });
+                  }}
+                >
+                  LogOut
+                </LogoutButton>
+              </Dropdown.Item>
+            </Dropdown>
+          </ProfileInfo>
+        )}
+
+        {status === "unauthenticated" && (
+          <SignInButton
+            onClick={() => {
+              signIn("github", {
+                callbackUrl: "http://localhost:3000/account/",
+              });
             }}
           >
-            <Dropdown.Item>
-              <>{data.user.name}</>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <Link href="/account">
-                <a>View Account</a>
-              </Link>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <LogoutButton
-                onClick={() => {
-                  signOut({
-                    callbackUrl: "http://localhost:3000/",
-                  });
-                }}
-              >
-                LogOut
-              </LogoutButton>
-            </Dropdown.Item>
-          </Dropdown>
-        </ProfileInfo>
-      )}
-
-      {status === "unauthenticated" && (
-        <SignInButton
-          onClick={() => {
-            signIn("github", {
-              callbackUrl: "http://localhost:3000/account/",
-            });
-          }}
-        >
-          SignUp
-        </SignInButton>
-      )}
+            SignUp
+          </SignInButton>
+        )}
+      </LoginProfileWrapper>
 
       <PageTitle>{componentName}</PageTitle>
     </HeaderWrapper>

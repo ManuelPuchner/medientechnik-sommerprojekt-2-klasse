@@ -14,17 +14,6 @@ const MainSection = styled.section`
 
 const MainImageWrapper = styled.div`
   width: 50%;
-
-  > span {
-    position: unset !important;
-  }
-
-  .image {
-    object-fit: contain;
-    width: 100% !important;
-    position: relative !important;
-    height: unset !important;
-  }
 `;
 
 const MainText = styled.div`
@@ -51,10 +40,9 @@ export default function Main() {
   return (
     <MainSection aria-labelledby="main-section__header">
       <MainImageWrapper>
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={`https://via.placeholder.com/500`}
-          layout="fill"
-          className="image"
           alt="main-image"
         />
       </MainImageWrapper>

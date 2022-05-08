@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { BsFillArrowUpLeftSquareFill } from "react-icons/bs";
 
 const DropdownWrapper = styled.div`
   position: relative;
-  
+  z-index: 1000;
 `;
 
 const DropdownHeader = styled.div`
@@ -36,7 +35,7 @@ const ItemWrapper = styled.div`
   border-radius: 0.2em;
   box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease-in-out;
-
+  z-index: 1000;
   &:hover {
     transform: translateY(-1px);
     box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.1);

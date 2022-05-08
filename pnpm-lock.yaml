@@ -8,6 +8,7 @@ specifiers:
   babel-plugin-styled-components: ^2.0.6
   eslint: ^8.12.0
   eslint-config-next: ^12.1.4
+  http-status-codes: ^2.2.0
   mongodb: ^4.5.0
   next: ^12.1.4
   next-auth: ^4.3.4
@@ -21,6 +22,7 @@ dependencies:
   '@next-auth/mongodb-adapter': 1.0.3_lneqpmtoauh4atnsevj4w5r4ci
   '@react-three/drei': 9.5.3_2xwvxxvakjl5mgi6nn2fdxzvja
   '@react-three/fiber': 8.0.12_vatykudawyxbpikjskz6eqooyu
+  http-status-codes: 2.2.0
   mongodb: 4.5.0
   next: 12.1.5_zpnidt7m3osuk7shl3s4oenomq
   next-auth: 4.3.4_zpnidt7m3osuk7shl3s4oenomq
@@ -1522,6 +1524,10 @@ packages:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
     dependencies:
       react-is: 16.13.1
+
+  /http-status-codes/2.2.0:
+    resolution: {integrity: sha512-feERVo9iWxvnejp3SEfm/+oNG517npqL2/PIA8ORjyOZjGC7TwCRQsZylciLS64i6pJ0wRYz3rkXLRwbtFa8Ng==}
+    dev: false
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
