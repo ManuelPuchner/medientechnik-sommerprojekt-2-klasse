@@ -12,7 +12,6 @@ export default function ProtectedRoute({ children }) {
     }
   }, [router, status]);
 
-
   if (status === "unauthenticated" || status === "loading") {
     return null;
   }

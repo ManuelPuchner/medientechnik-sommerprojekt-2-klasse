@@ -5,20 +5,17 @@ import Triangle from "./Triangle";
 
 let colors = {
   pink: { r: 255, g: 160, b: 249 },
-  yellow: { r: 255, g: 242, b: 52 }, 
+  yellow: { r: 255, g: 242, b: 52 },
   green: { r: 174, g: 255, b: 97 },
   blue: { r: 126, g: 255, b: 247 },
   purple: { r: 188, g: 155, b: 255 },
   orange: { r: 255, g: 184, b: 104 },
 };
 
-
 let rgbColors = {};
 Object.keys(colors).map((key) => {
-  rgbColors[key] = `rgb(${colors[key].r}, ${colors[key].g}, ${colors[key].b})`;  
+  rgbColors[key] = `rgb(${colors[key].r}, ${colors[key].g}, ${colors[key].b})`;
 });
-
-
 
 const BackgroundWrapper = styled.div`
   position: fixed;
@@ -27,7 +24,7 @@ const BackgroundWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   z-index: -1;
-`
+`;
 
 function Background() {
   return (

@@ -8,7 +8,7 @@ const authRoutes = ["/account"];
 export default function AuthWrapper({ children }) {
   const { status } = useSession();
   const router = useRouter();
-  if(status === "loading") {
+  if (status === "loading") {
     return null;
   }
   return (

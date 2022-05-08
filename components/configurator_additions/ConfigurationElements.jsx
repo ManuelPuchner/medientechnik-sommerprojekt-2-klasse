@@ -52,7 +52,6 @@ export default function ConfigurationElements({ colors, setColors }) {
           </InputWrapper>
           <InputWrapper>
             <label>Sole</label>
-            
           </InputWrapper>
           <InputWrapper>
             <label>Stripes</label>

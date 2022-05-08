@@ -66,7 +66,11 @@ function Dropdown({ children, headerConfig, ...props }) {
   };
   return (
     <DropdownWrapper>
-      <DropdownHeader onClick={handleClick} ref={ref} backgroundColor={headerConfig.backgroundColor}>
+      <DropdownHeader
+        onClick={handleClick}
+        ref={ref}
+        backgroundColor={headerConfig.backgroundColor}
+      >
         {headerConfig.content}
       </DropdownHeader>
       <Items>{isOpen && children}</Items>

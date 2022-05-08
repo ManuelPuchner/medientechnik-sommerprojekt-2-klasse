@@ -36,7 +36,7 @@ function HSVtoRGB(h, s, v) {
 }
 
 function HSVtoHEX(h, s, v) {
-  let rgb = HSVtoRGB(h/360, s, v);
+  let rgb = HSVtoRGB(h / 360, s, v);
   let r = rgb.r.toString(16);
   let g = rgb.g.toString(16);
   let b = rgb.b.toString(16);
@@ -45,6 +45,5 @@ function HSVtoHEX(h, s, v) {
   if (b.length == 1) b = "0" + b;
   return "#" + r + g + b;
 }
-
 
 export default HSVtoHEX;

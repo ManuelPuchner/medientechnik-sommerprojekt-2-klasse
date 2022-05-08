@@ -5,6 +5,6 @@ import Collections from "./Collections";
 const Sections = {
   Main,
   OurProducts,
-  Collections
-}
+  Collections,
+};
 export default Sections;

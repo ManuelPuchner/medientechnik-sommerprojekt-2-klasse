@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const ButtonTemplate = styled.button`
   background: transparent;
@@ -10,6 +10,6 @@ const ButtonTemplate = styled.button`
   padding: 0.4em 0.5em;
   border-radius: 0.5em;
   display: block;
-`
+`;
 
 export default ButtonTemplate;

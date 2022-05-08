@@ -16,7 +16,7 @@ function Triangle(props) {
     ref.current.style.transform = `translate(-50%, -50%) rotate(${
       props.rotation + window.scrollY / randomSpeed
     }deg)`;
-  }
+  };
   useEffect(() => {
     const shouldRotate = Math.random() > 0.5;
     const randomSpeed = shouldRotate

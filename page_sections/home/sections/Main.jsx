@@ -41,10 +41,7 @@ export default function Main() {
     <MainSection aria-labelledby="main-section__header">
       <MainImageWrapper>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`https://via.placeholder.com/500`}
-          alt="main-image"
-        />
+        <img src={`https://via.placeholder.com/500`} alt="main-image" />
       </MainImageWrapper>
       <MainText>
         <MainTextTitle id="main-section__header">MyShoes</MainTextTitle>

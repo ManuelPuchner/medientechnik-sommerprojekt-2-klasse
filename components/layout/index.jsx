@@ -27,5 +27,5 @@ export default function Index({ children }) {
       <Background />
       <Nav currentPage={currentPage} />
     </MainLayout>
-  ); 
+  );
 }

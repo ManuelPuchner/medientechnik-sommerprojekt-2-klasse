@@ -124,13 +124,13 @@ function Walkthrough({ colors, setColors }) {
     "stripes",
     "band",
     "patch",
-  ]
+  ];
 
-  const {data, status} = useSession();
+  const { data, status } = useSession();
 
-  const saveConfig =  async (e) => {
+  const saveConfig = async (e) => {
     e.preventDefault();
-    if(status === "authenticated") {
+    if (status === "authenticated") {
       const result = await fetch("/api/configuration/save", {
         method: "POST",
         headers: {
@@ -141,7 +141,7 @@ function Walkthrough({ colors, setColors }) {
       const data = await result.json();
       console.log(data);
     }
-  }
+  };
 
   return (
     <>
@@ -184,7 +184,5 @@ function Walkthrough({ colors, setColors }) {
     </>
   );
 }
-
-
 
 export default Walkthrough;
