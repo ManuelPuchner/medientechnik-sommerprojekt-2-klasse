@@ -5,6 +5,7 @@ import { ObjectId } from "mongodb";
 import styled from "styled-components";
 import { HEXtoHSV } from "utils/colorConversions";
 import Link from "next/link";
+import base64 from "base-64";
 
 const ConfigList = styled.ul`
   width: clamp(25rem, 50%, 50rem);
@@ -67,7 +68,7 @@ function Account({ status, data }) {
         <h3>Your Configurations: </h3>
         <ConfigList>
           {data.configs.map((config, index) => {
-            let encodedConfig = encodeURIComponent(JSON.stringify(config));
+            let encodedConfig = base64.encode(JSON.stringify(config));
             return (
               <ConfigListItem key={index}>
                 <ConfigBox config={config} />

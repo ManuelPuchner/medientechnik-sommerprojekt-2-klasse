@@ -7,6 +7,7 @@ import {
   useProgress,
 } from "@react-three/drei";
 import styled from "styled-components";
+import base64 from "base-64";
 
 import { useState, Suspense, useEffect } from "react";
 
@@ -35,14 +36,19 @@ function Configurator() {
 
   const [configId, setConfigId] = useState(null);
 
+  const router = useRouter();
   useEffect(() => {
-    let params = new URLSearchParams(window.location.search);
-    let configString = params.get("config");
-    if (configString) {
-      let config = JSON.parse(configString);
-      console.log(config)
-      setColors(config.colors);
-      setConfigId(config._id);
+    if (router.query.config) {
+      let config;
+      try {
+        config = JSON.parse(base64.decode(router.query.config));
+      } catch (e) {
+        console.log(e);
+      }
+      if (config) {
+        setColors(config.colors);
+        setConfigId(config._id);
+      }
     }
   }, []);
 
@@ -56,7 +62,7 @@ function Configurator() {
         overflowX: "hidden",
       }}
     >
-      <Walkthrough colors={colors} setColors={setColors} configId={configId}/>
+      <Walkthrough colors={colors} setColors={setColors} configId={configId} />
       <Canvas
         style={{
           height: "60%",
