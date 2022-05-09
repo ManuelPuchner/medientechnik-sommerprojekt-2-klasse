@@ -83,7 +83,7 @@ const PageIndicator = styled.div`
   background-color: ${({ active }) => (active ? "green" : "black")};
 `;
 
-function Walkthrough({ colors, setColors }) {
+function Walkthrough({ colors, setColors, configId }) {
   // page state
   // 0: starting page
   // >0: every configuration step
@@ -131,15 +131,27 @@ function Walkthrough({ colors, setColors }) {
   const saveConfig = async (e) => {
     e.preventDefault();
     if (status === "authenticated") {
-      const result = await fetch("/api/configuration/save", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(colors),
-      });
-      const data = await result.json();
-      console.log(data);
+      if (configId) {
+        const result = await fetch(`/api/configuration/`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ configId, colors }),
+        });
+        const data = await result.json();
+        console.log(data);
+      } else {
+        const result = await fetch("/api/configuration/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(colors),
+        });
+        const data = await result.json();
+        console.log(data);
+      }
     }
   };
 

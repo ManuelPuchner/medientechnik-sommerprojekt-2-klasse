@@ -18,22 +18,21 @@ function isValidConfig(config) {
 }
 
 export default async function handler(req, res) {
+  let session = await getSession({ req });
+  if (!session) {
+    res.status(StatusCodes.UNAUTHORIZED).json({ error: "Unauthorized" });
+    return;
+  }
+  let { db } = await connectToDatabase();
+
+  let user = await db.collection("users").findOne(session.user);
+  if (!user) {
+    res.status(StatusCodes.NOT_FOUND).json({ error: "User not found" });
+    return;
+  }
+
   if (req.method === "POST") {
-    let session = await getSession({ req });
-    if (!session) {
-      res.status(StatusCodes.UNAUTHORIZED).json({ error: "Unauthorized" });
-      return;
-    }
-    let { db } = await connectToDatabase();
-
-    let user = await db.collection("users").findOne(session.user);
-    if (!user) {
-      res.status(StatusCodes.NOT_FOUND).json({ error: "User not found" });
-      return;
-    }
-
     const configuration = req.body;
-
     if (!isValidConfig(configuration)) {
       res
         .status(StatusCodes.BAD_REQUEST)
@@ -67,6 +66,36 @@ export default async function handler(req, res) {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ error: "Failed to insert configuration" });
+    }
+  } else if (req.method == "PUT") {
+    const { configId, colors } = req.body;
+    if (!isValidConfig(colors)) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Invalid color configuration" });
+      return;
+    }
+
+    if (!configId) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Invalid configuration id" });
+      return;
+    }
+
+    let result = await db
+      .collection("configurations")
+      .updateOne(
+        { _id: ObjectId(configId), userId: ObjectId(user._id) },
+        { $set: { colors: colors } }
+      );
+
+    if (result.acknowledged) {
+      res.status(StatusCodes.OK).json({ success: true });
+    } else {
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: "Failed to update configuration" });
     }
   } else {
     res
