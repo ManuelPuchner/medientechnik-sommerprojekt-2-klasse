@@ -4,6 +4,8 @@
 
 Um die Dev-Version aufzurufen, nutzen sie den Command
 ```
+npm run dev
+# oder
 pnpm run dev
 ```
 Bitte installieren sie dazu zuerst ``pnpm`` von [https://pnpm.io](https://pnpm.io)
