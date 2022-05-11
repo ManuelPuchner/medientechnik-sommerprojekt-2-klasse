@@ -62,7 +62,7 @@ function Configurator() {
         overflowX: "hidden",
       }}
     >
-      <Walkthrough colors={colors} setColors={setColors} configId={configId} />
+      <Walkthrough colors={colors} setColors={setColors} configId={configId} setConfigId={setConfigId} />
       <Canvas
         style={{
           height: "60%",

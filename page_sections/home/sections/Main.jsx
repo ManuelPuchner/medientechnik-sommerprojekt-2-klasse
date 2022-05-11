@@ -2,10 +2,6 @@ import styled from "styled-components";
 import Image from "next/image";
 
 const MainSection = styled.section`
-  width: 90%;
-  box-sizing: border-box;
-  padding: 0 0.5rem;
-  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;

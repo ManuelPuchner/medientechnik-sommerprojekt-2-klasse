@@ -14,7 +14,14 @@ const MainLayout = styled.div`
   min-height: 100vh;
 `;
 
-const MainContentWrapper = styled.main``;
+const MainContentWrapper = styled.main`
+  & > * {
+    width: 90%;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+    margin: 0 auto;
+  }
+`;
 
 export default function Index({ children }) {
   const router = useRouter();

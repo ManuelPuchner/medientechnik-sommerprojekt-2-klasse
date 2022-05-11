@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { ColorPicker } from "components/colorpicker";
 import WalkthroughStep from "./WalkthroughStep";
 import { useSession } from "next-auth/react";
+import { StatusCodes } from "http-status-codes";
 
 const WalkthroughScreen = styled.div`
   position: absolute;
@@ -83,7 +84,7 @@ const PageIndicator = styled.div`
   background-color: ${({ active }) => (active ? "green" : "black")};
 `;
 
-function Walkthrough({ colors, setColors, configId }) {
+function Walkthrough({ colors, setColors, configId, setConfigId }) {
   // page state
   // 0: starting page
   // >0: every configuration step
@@ -141,6 +142,7 @@ function Walkthrough({ colors, setColors, configId }) {
         });
         const data = await result.json();
         console.log(data);
+        console.log("update");
       } else {
         const result = await fetch("/api/configuration/", {
           method: "POST",
@@ -149,8 +151,12 @@ function Walkthrough({ colors, setColors, configId }) {
           },
           body: JSON.stringify(colors),
         });
-        const data = await result.json();
-        console.log(data);
+
+        if (result.status === StatusCodes.CREATED) {
+          const data = await result.json();
+          setConfigId(data.data._id);
+          console.log(data);
+        }
       }
     }
   };

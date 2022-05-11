@@ -44,6 +44,7 @@ export default async function handler(req, res) {
       userId: ObjectId(user._id),
       colors: configuration,
       createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     let hasSameConfig = await db
@@ -61,13 +62,17 @@ export default async function handler(req, res) {
       .collection("configurations")
       .insertOne(configToInsert);
     if (result.acknowledged) {
-      res.status(StatusCodes.OK).json({ success: true });
+      res.status(StatusCodes.CREATED).json({ success: true, data: configToInsert });
     } else {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ error: "Failed to insert configuration" });
     }
-  } else if (req.method == "PUT") {
+  } 
+  
+  ///////////////
+
+  else if (req.method == "PUT") {
     const { configId, colors } = req.body;
     if (!isValidConfig(colors)) {
       res
@@ -87,11 +92,11 @@ export default async function handler(req, res) {
       .collection("configurations")
       .updateOne(
         { _id: ObjectId(configId), userId: ObjectId(user._id) },
-        { $set: { colors: colors } }
+        { $set: { colors, updatedAt: new Date() } }
       );
 
     if (result.acknowledged) {
-      res.status(StatusCodes.OK).json({ success: true });
+      res.status(StatusCodes.OK).json({ success: true, data: result });
     } else {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
