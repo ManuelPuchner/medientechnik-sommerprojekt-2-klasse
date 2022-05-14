@@ -7,14 +7,18 @@ import Link from "next/link";
 import base64 from "base-64";
 import ConfigBox from "components/account_additions/ConfigBox";
 import { AiOutlineEdit } from "react-icons/ai";
+import { BsCartPlus, BsCartCheck } from "react-icons/bs";
+import { useState, useContext } from "react";
+import { CartContext } from "stores/Cart";
+import ConfigLink from "components/account_additions/ConfigLink";
 
 const ConfigList = styled.ul`
-  width: clamp(30rem, 65%, 50rem);
+  width: clamp(30rem, 70%, 45rem);
 `;
 
 const ConfigListItem = styled.li`
   display: flex;
-  padding: 1rem;
+  padding: 0.2rem;
   margin-top: 1rem;
 `;
 
@@ -33,7 +37,6 @@ const AccountInfo = styled.div`
 const AccountNameWrapper = styled.div`
   display: flex;
   justify-content: center;
-
 `;
 
 const AccountName = styled.div`
@@ -67,37 +70,82 @@ const AccountImage = styled.img`
   display: block;
 `;
 
-const ConfigLink = styled.a`
-  box-shadow: 0px 0.4rem 0.5rem rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(0.5rem);
-  border-radius: 0.3rem;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-left: 0.3rem;
 
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.9);
-    transform: translateY(-1px);
-    box-shadow: 0px 0.4rem 0.6rem rgba(0, 0, 0, 0.2);
-  }
-
-  width: 5.5rem;
-
-  & > svg {
-    display: block;
-    font-size: 1.5rem;
-    width: 2rem;
-    height: 2rem;
+const AddToCartButton = styled(ConfigLink)`
+  & > * {
+    pointer-events: none;
   }
 `;
-
 function Account({ status, data }) {
+  const {cartItems, setCartItems, removeCartItem, addCartItem} = useContext(CartContext);
+  const [inCartIds, setInCartIds] = useState(
+    new Set(
+      data.configs
+        .map((config) => config.isInCart && config._id)
+        .filter(Boolean)
+    )
+  );
+
+  const addToCart = async (e, config) => {
+    const id = config._id;
+    e.preventDefault();
+    if (!inCartIds.has(id)) {
+      // let result = await fetch("/api/cart", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     id,
+      //   }),
+      // });
+
+      // let json = await result.json();
+      // if (result.status === StatusCodes.OK) {
+      //   addToInCartIds(id);
+      //   setCartItems([...cartItems, config]);
+      // } else {
+      //   console.log("Error", json);
+      // }
+      //
+      let result = await addCartItem({config});
+      if (result.status === StatusCodes.OK) {
+        addToInCartIds(id);
+      } else {
+        console.log("Error", result);
+      }
+    } else {
+      let result = await fetch("/api/cart", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      });
+
+      let json = await result.json();
+      if (result.status === StatusCodes.OK) {
+        removeFromInCartIds(id);
+        setCartItems(cartItems.filter((config) => config._id !== id));
+      } else {
+        console.log("error", json);
+      }
+    }
+  };
+
+  const addToInCartIds = (id) => {
+    let newSet = new Set([...inCartIds, id]);
+    setInCartIds(newSet);
+  };
+
+  const removeFromInCartIds = (id) => {
+    let newSet = new Set([...inCartIds].filter((_id) => _id !== id));
+    setInCartIds(newSet);
+  };
+
   return (
     <>
       <AccountPageWrapper>
@@ -110,15 +158,18 @@ function Account({ status, data }) {
               <AiOutlineEdit />
             </EditAccountName>
           </AccountNameWrapper>
+          <Link passHref href="/cart">
+            <ConfigLink>View Your Cart</ConfigLink>
+          </Link>
         </AccountInfo>
         <ConfigurationsWrapper>
           <h3>Your Configurations: </h3>
           {data.configs.length > 0 ? (
             <ConfigList>
-              {data.configs.map((config, index) => {
+              {data.configs.map((config) => {
                 let encodedConfig = base64.encode(JSON.stringify(config));
                 return (
-                  <ConfigListItem key={index}>
+                  <ConfigListItem key={config._id}>
                     <ConfigBox config={config} />
                     <Link
                       passHref
@@ -128,6 +179,16 @@ function Account({ status, data }) {
                         <AiOutlineEdit />
                       </ConfigLink>
                     </Link>
+                    <AddToCartButton
+                      title="Add to your cart"
+                      onClick={(e) => addToCart(e, config)}
+                    >
+                      {inCartIds.has(config._id) ? (
+                        <BsCartCheck />
+                      ) : (
+                        <BsCartPlus />
+                      )}
+                    </AddToCartButton>
                   </ConfigListItem>
                 );
               })}
@@ -168,11 +229,20 @@ export const getServerSideProps = async ({ req, res }) => {
   let userConfigs = await db
     .collection("configurations")
     .find({ userId: ObjectId(user._id) })
-    .sort({ createdAt: -1 })
+    .sort({ updatedAt: -1 })
     .toArray();
 
+  if (user?.cart?.items?.length > 0) {
+    userConfigs = userConfigs.map((config) => {
+      config.isInCart = !!user.cart.items.find((configId) =>
+        configId.equals(config._id)
+      );
+      return config;
+    });
+  }
   userConfigs = JSON.parse(JSON.stringify(userConfigs));
   user = JSON.parse(JSON.stringify(user));
+
   return {
     props: {
       status: StatusCodes.OK,

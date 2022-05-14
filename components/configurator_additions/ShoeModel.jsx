@@ -12,8 +12,12 @@ export default function ShoeModel({ colors }) {
   //   group.current.position.y = Math.sin(time) * 0.05;
   // })
 
+  const hostname =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "http://172.17.221.108:3000";
   const { nodes, materials } = useGLTF(
-    "http://localhost:3000/shoe_compressed.glb"
+    `${hostname}/shoe_compressed.glb`
   );
   return (
     <group

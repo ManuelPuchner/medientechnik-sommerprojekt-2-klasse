@@ -70,6 +70,11 @@ export default function Header({ componentName }) {
                 </Link>
               </Dropdown.Item>
               <Dropdown.Item>
+                <Link href="/cart">
+                  <a>View Cart</a>
+                </Link>
+              </Dropdown.Item>
+              <Dropdown.Item>
                 <LogoutButton
                   onClick={() => {
                     signOut({
