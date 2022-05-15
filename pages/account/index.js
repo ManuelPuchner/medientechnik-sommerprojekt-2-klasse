@@ -7,13 +7,13 @@ import Link from "next/link";
 import base64 from "base-64";
 import ConfigBox from "components/account_additions/ConfigBox";
 import { AiOutlineEdit } from "react-icons/ai";
-import { BsCartPlus, BsCartCheck } from "react-icons/bs";
+import { BsCartPlus, BsCartCheck, BsTrash } from "react-icons/bs";
 import { useState, useContext } from "react";
 import { CartContext } from "stores/Cart";
 import ConfigLink from "components/account_additions/ConfigLink";
 
 const ConfigList = styled.ul`
-  width: clamp(30rem, 70%, 45rem);
+  width: clamp(35rem, 75%, 45rem);
 `;
 
 const ConfigListItem = styled.li`
@@ -70,20 +70,21 @@ const AccountImage = styled.img`
   display: block;
 `;
 
-
-
 const AddToCartButton = styled(ConfigLink)`
   & > * {
     pointer-events: none;
   }
 `;
+
+const DeleteConfigButton = styled(AddToCartButton)``;
 function Account({ status, data }) {
-  const {cartItems, setCartItems, removeCartItem, addCartItem} = useContext(CartContext);
+  const { cartItems, setCartItems, removeCartItem, addCartItem } =
+    useContext(CartContext);
+
+  const [configs, setConfigs] = useState(data.configs);
   const [inCartIds, setInCartIds] = useState(
     new Set(
-      data.configs
-        .map((config) => config.isInCart && config._id)
-        .filter(Boolean)
+      configs.map((config) => config.isInCart && config._id).filter(Boolean)
     )
   );
 
@@ -91,25 +92,7 @@ function Account({ status, data }) {
     const id = config._id;
     e.preventDefault();
     if (!inCartIds.has(id)) {
-      // let result = await fetch("/api/cart", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     id,
-      //   }),
-      // });
-
-      // let json = await result.json();
-      // if (result.status === StatusCodes.OK) {
-      //   addToInCartIds(id);
-      //   setCartItems([...cartItems, config]);
-      // } else {
-      //   console.log("Error", json);
-      // }
-      //
-      let result = await addCartItem({config});
+      let result = await addCartItem({ config });
       if (result.status === StatusCodes.OK) {
         addToInCartIds(id);
       } else {
@@ -146,6 +129,28 @@ function Account({ status, data }) {
     setInCartIds(newSet);
   };
 
+  const deleteConfig = async (e, config) => {
+    e.preventDefault();
+    let result = await fetch("/api/configuration", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        configId: config._id,
+      }),
+    });
+
+    let json = await result.json();
+    if (result.status === StatusCodes.OK) {
+      removeFromInCartIds(config._id);
+      removeCartItem(config._id);
+      setConfigs(configs.filter((_config) => _config._id !== config._id));
+    } else {
+      console.log("error", json);
+    }
+  };
+
   return (
     <>
       <AccountPageWrapper>
@@ -164,9 +169,9 @@ function Account({ status, data }) {
         </AccountInfo>
         <ConfigurationsWrapper>
           <h3>Your Configurations: </h3>
-          {data.configs.length > 0 ? (
+          {configs.length > 0 ? (
             <ConfigList>
-              {data.configs.map((config) => {
+              {configs.map((config) => {
                 let encodedConfig = base64.encode(JSON.stringify(config));
                 return (
                   <ConfigListItem key={config._id}>
@@ -189,6 +194,12 @@ function Account({ status, data }) {
                         <BsCartPlus />
                       )}
                     </AddToCartButton>
+                    <DeleteConfigButton
+                      title="Delete your configuration"
+                      onClick={(e) => deleteConfig(e, config)}
+                    >
+                      <BsTrash />
+                    </DeleteConfigButton>
                   </ConfigListItem>
                 );
               })}

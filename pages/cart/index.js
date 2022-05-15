@@ -4,13 +4,27 @@ import styled from "styled-components";
 import ConfigBox from "components/account_additions/ConfigBox";
 import ConfigLink from "components/account_additions/ConfigLink";
 import { BsTrash } from "react-icons/bs";
+import CheckoutForm from "components/cart_additions/CheckoutForm";
 
-const CartList = styled.ul``;
+
+
+const CartPageWrapper = styled.div`
+  display: flex;
+`
+
+const CartList = styled.ul`
+  padding: 0;
+  width: 66.66666667%;
+`;
 
 const CartListItem = styled.li`
   display: flex;
   margin-top: 1rem;
 `;
+
+const CheckOutField = styled.div`
+  width: 33.33333333%;
+`
 
 const RemoveFromCartButton = styled(ConfigLink)`
   & > * {
@@ -31,18 +45,21 @@ export default function Cart() {
     cartItems.shift();
   }
   return (
-    <>
+    <CartPageWrapper>
       <CartList>
         {cartItems && cartItems.map((item, index) => (
           <CartListItem key={index}>
             <ConfigBox config={item} />
-            <RemoveFromCartButton onClick={() => removeItemFromCart(item._id)}>
+            <RemoveFromCartButton title="Remove from Cart" onClick={() => removeItemFromCart(item._id)}>
               <BsTrash />
             </RemoveFromCartButton>
           </CartListItem>
         ))}
       </CartList>
+      <CheckOutField>
+        <CheckoutForm />
+      </CheckOutField>
       {/* <pre>{JSON.stringify(cartItems, null, 2)}</pre> */}
-    </>
+    </CartPageWrapper>
   );
 }

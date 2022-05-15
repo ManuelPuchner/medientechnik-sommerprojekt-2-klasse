@@ -62,16 +62,17 @@ export default async function handler(req, res) {
       .collection("configurations")
       .insertOne(configToInsert);
     if (result.acknowledged) {
-      res.status(StatusCodes.CREATED).json({ success: true, data: configToInsert });
+      res
+        .status(StatusCodes.CREATED)
+        .json({ success: true, data: configToInsert });
     } else {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ error: "Failed to insert configuration" });
     }
-  } 
-  
-  ///////////////
+  }
 
+  ///////////////
   else if (req.method == "PUT") {
     const { configId, colors } = req.body;
     if (!isValidConfig(colors)) {
@@ -101,6 +102,29 @@ export default async function handler(req, res) {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ error: "Failed to update configuration" });
+    }
+  }
+
+  ////////////
+  else if (req.method == "DELETE") {
+    const { configId } = req.body;
+    if (!configId) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "Invalid configuration id" });
+      return;
+    }
+
+    let result = await db
+      .collection("configurations")
+      .deleteOne({ _id: ObjectId(configId), userId: ObjectId(user._id) });
+
+    if (result.acknowledged) {
+      res.status(StatusCodes.OK).json({ success: true, data: result });
+    } else {
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: "Failed to delete configuration" });
     }
   } else {
     res
