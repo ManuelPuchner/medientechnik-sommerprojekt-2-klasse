@@ -1,16 +1,17 @@
 import { getSession, useSession } from "next-auth/react";
 import { StatusCodes } from "http-status-codes";
-import { connectToDatabase } from "lib/mongodb";
 import { ObjectId } from "mongodb";
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import Link from "next/link";
 import base64 from "base-64";
-import ConfigBox from "components/account_additions/ConfigBox";
+
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsCartPlus, BsCartCheck, BsTrash } from "react-icons/bs";
 import { useState, useContext } from "react";
 import { CartContext } from "stores/Cart";
 import ConfigLink from "components/account_additions/ConfigLink";
+import ConfigBox from "components/account_additions/ConfigBox";
+import CheckoutButton from "components/cart_additions/CheckoutButton";
 
 const ConfigList = styled.ul`
   width: clamp(35rem, 75%, 45rem);
@@ -77,6 +78,7 @@ const AddToCartButton = styled(ConfigLink)`
 `;
 
 const DeleteConfigButton = styled(AddToCartButton)``;
+
 function Account({ status, data }) {
   const { cartItems, setCartItems, removeCartItem, addCartItem } =
     useContext(CartContext);
@@ -170,40 +172,45 @@ function Account({ status, data }) {
         <ConfigurationsWrapper>
           <h3>Your Configurations: </h3>
           {configs.length > 0 ? (
-            <ConfigList>
-              {configs.map((config) => {
-                let encodedConfig = base64.encode(JSON.stringify(config));
-                return (
-                  <ConfigListItem key={config._id}>
-                    <ConfigBox config={config} />
-                    <Link
-                      passHref
-                      href={`/configurator?config=${encodedConfig}`}
-                    >
-                      <ConfigLink title="Edit / View your configuration">
-                        <AiOutlineEdit />
-                      </ConfigLink>
-                    </Link>
-                    <AddToCartButton
-                      title="Add to your cart"
-                      onClick={(e) => addToCart(e, config)}
-                    >
-                      {inCartIds.has(config._id) ? (
-                        <BsCartCheck />
-                      ) : (
-                        <BsCartPlus />
-                      )}
-                    </AddToCartButton>
-                    <DeleteConfigButton
-                      title="Delete your configuration"
-                      onClick={(e) => deleteConfig(e, config)}
-                    >
-                      <BsTrash />
-                    </DeleteConfigButton>
-                  </ConfigListItem>
-                );
-              })}
-            </ConfigList>
+            <>
+              <ConfigList>
+                {configs.map((config) => {
+                  let encodedConfig = base64.encode(JSON.stringify(config));
+                  return (
+                    <ConfigListItem key={config._id}>
+                      <ConfigBox config={config} />
+                      <Link
+                        passHref
+                        href={`/configurator?config=${encodedConfig}`}
+                      >
+                        <ConfigLink title="Edit / View your configuration">
+                          <AiOutlineEdit />
+                        </ConfigLink>
+                      </Link>
+                      <AddToCartButton
+                        title="Add to your cart"
+                        onClick={(e) => addToCart(e, config)}
+                      >
+                        {inCartIds.has(config._id) ? (
+                          <BsCartCheck />
+                        ) : (
+                          <BsCartPlus />
+                        )}
+                      </AddToCartButton>
+                      <DeleteConfigButton
+                        title="Delete your configuration"
+                        onClick={(e) => deleteConfig(e, config)}
+                      >
+                        <BsTrash />
+                      </DeleteConfigButton>
+                    </ConfigListItem>
+                  );
+                })}
+              </ConfigList>
+              <Link passHref href="/cart">
+                <CheckoutButton style="right: 20%;">View Cart</CheckoutButton>
+              </Link>
+            </>
           ) : (
             <p>You have no configurations yet.</p>
           )}
@@ -213,6 +220,8 @@ function Account({ status, data }) {
     </>
   );
 }
+
+import { connectToDatabase } from "../../lib/mongodb";
 
 export const getServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });

@@ -5,16 +5,18 @@ import Header from "./Header";
 import Nav from "./Nav";
 
 import styled from "styled-components";
-import Background from "components/decorations/background";
+import Background from "../../components/decorations/background";
 import { toPascalCase } from "utils";
 
 const MainLayout = styled.div`
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
+  /* z-index: -1; */
 `;
 
 const MainContentWrapper = styled.main`
+  /* z-index: -1; */
   & > * {
     width: 90%;
     box-sizing: border-box;

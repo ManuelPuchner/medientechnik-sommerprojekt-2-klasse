@@ -26,6 +26,9 @@ const DropdownHeader = styled.div`
 const Items = styled.div`
   position: absolute;
   z-index: 1000;
+  & > * {
+    z-index: 1000;
+  }
 `;
 const ItemWrapper = styled.div`
   position: relative;
@@ -36,7 +39,7 @@ const ItemWrapper = styled.div`
   padding: 0.5em 0.6em;
   margin-top: 0.2em;
   border-radius: 0.2em;
-  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 8px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease-in-out;
   &:hover {
     transform: translateY(-1px);
