@@ -10,7 +10,7 @@ const DropdownWrapper = styled.div`
 const DropdownHeader = styled.div`
   width: 100%;
   background-color: ${(props) => props.backgroundColor};
-  padding: 0.5em 0.6em;
+  padding: ${(props) => (props.hasPadding ? "0.5em 0.6em" : "0")};
   border-radius: 0.2em;
   margin: 0;
   user-select: none;
@@ -39,11 +39,11 @@ const ItemWrapper = styled.div`
   padding: 0.5em 0.6em;
   margin-top: 0.2em;
   border-radius: 0.2em;
-  box-shadow: 0px 2px 8px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 5px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease-in-out;
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 8px 5px rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -75,6 +75,7 @@ function Dropdown({ children, headerConfig, ...props }) {
         onClick={handleClick}
         ref={ref}
         backgroundColor={headerConfig.backgroundColor}
+        hasPadding={headerConfig.hasPadding}
       >
         {headerConfig.content}
       </DropdownHeader>

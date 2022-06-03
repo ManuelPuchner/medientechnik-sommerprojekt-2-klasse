@@ -4,6 +4,7 @@ specifiers:
   '@next-auth/mongodb-adapter': ^1.0.3
   '@react-three/drei': ^9.1.2
   '@react-three/fiber': ^8.0.9
+  '@splidejs/react-splide': ^0.7.7
   '@stripe/react-stripe-js': 1.8.0-0
   '@stripe/stripe-js': ^1.29.0
   '@types/styled-components': ^5.1.24
@@ -27,6 +28,7 @@ dependencies:
   '@next-auth/mongodb-adapter': 1.0.3_lneqpmtoauh4atnsevj4w5r4ci
   '@react-three/drei': 9.5.3_2xwvxxvakjl5mgi6nn2fdxzvja
   '@react-three/fiber': 8.0.12_vatykudawyxbpikjskz6eqooyu
+  '@splidejs/react-splide': 0.7.7
   '@stripe/react-stripe-js': 1.8.0-0_7ukevxqgl4virbeozfvpqeyvye
   '@stripe/stripe-js': 1.29.0
   base-64: 1.0.0
@@ -532,6 +534,16 @@ packages:
   /@rushstack/eslint-patch/1.0.8:
     resolution: {integrity: sha512-ZK5v4bJwgXldAUA8r3q9YKfCwOqoHTK/ZqRjSeRXQrBXWouoPnS4MQtgC4AXGiiBuUu5wxrRgTlv0ktmM4P1Aw==}
     dev: true
+
+  /@splidejs/react-splide/0.7.7:
+    resolution: {integrity: sha512-dsPqtpzIqHISrqWTqqGfX7rYjg37sALZDmLUDMxajIzshVDgcdj896QV9/tGqJmUWqRWFokotTCrAd7bRpXfLA==}
+    dependencies:
+      '@splidejs/splide': 4.0.6
+    dev: false
+
+  /@splidejs/splide/4.0.6:
+    resolution: {integrity: sha512-JHJJX08qAe5N33p6TKBAs5hRkJHmmG+Kh9LPWkOQgcV07yG+YEiY26lXi/xbH6Rb0UUxbs3Y3Iz/1WYjmfGhjA==}
+    dev: false
 
   /@stripe/react-stripe-js/1.8.0-0_7ukevxqgl4virbeozfvpqeyvye:
     resolution: {integrity: sha512-9kg8aTRzq2VpSv2O6N3Uk5LtiAi3xAIkKP9EDj+Ll9h32fA3ei1Pi1iexNZREO9wdWFq4SKzEplgSikvPg98MA==}

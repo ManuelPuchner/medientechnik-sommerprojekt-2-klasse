@@ -161,13 +161,10 @@ function Account({ status, data }) {
           <AccountImage src={data.user.image} alt="prifile picture" />
           <AccountNameWrapper>
             <AccountName>{data.user.name}</AccountName>
-            <EditAccountName title="Edit your Account name (not implemented yet)">
+            {/* <EditAccountName title="Edit your Account name (not implemented yet)">
               <AiOutlineEdit />
-            </EditAccountName>
+            </EditAccountName> */}
           </AccountNameWrapper>
-          <Link passHref href="/cart">
-            <ConfigLink>View Your Cart</ConfigLink>
-          </Link>
         </AccountInfo>
         <ConfigurationsWrapper>
           <h3>Your Configurations: </h3>
@@ -216,7 +213,7 @@ function Account({ status, data }) {
           )}
         </ConfigurationsWrapper>
       </AccountPageWrapper>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
     </>
   );
 }

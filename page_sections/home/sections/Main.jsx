@@ -5,11 +5,15 @@ const MainSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 75%;
+  height: 75vh;
 `;
 
 const MainImageWrapper = styled.div`
   width: 50%;
+
+  & > img {
+    width: 100%;
+  }
 `;
 
 const MainText = styled.div`
@@ -37,7 +41,7 @@ export default function Main() {
     <MainSection aria-labelledby="main-section__header">
       <MainImageWrapper>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={`https://via.placeholder.com/500`} alt="main-image" />
+        <img src="/sneakers/black-edition/green.png" alt="main-image" />
       </MainImageWrapper>
       <MainText>
         <MainTextTitle id="main-section__header">MyShoes</MainTextTitle>

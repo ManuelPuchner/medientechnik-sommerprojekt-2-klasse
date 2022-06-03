@@ -72,7 +72,7 @@ const RightNavItem = styled(NavItem)`
   }
 `;
 
-const routes = ["About", "Home", "Configurator"];
+const routes = ["Account", "Home", "Configurator"];
 
 export default function Nav({ currentPage }) {
   currentPage = toPascalCase(currentPage);

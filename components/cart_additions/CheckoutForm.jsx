@@ -14,13 +14,13 @@ const Wrapper = styled.div`
 
 const NewCheckoutButton = styled(CheckoutButton)`
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
 
   &:hover {
     cursor: pointer;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
   }
 `;
 

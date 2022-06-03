@@ -8,6 +8,7 @@ import { SignInButton, LogoutButton } from "components/authComponents";
 import Dropdown from "components/dropdown";
 
 const HeaderWrapper = styled.header`
+  z-index:1000;
   position: relative;
   padding: 2rem 3rem;
   display: flex;
